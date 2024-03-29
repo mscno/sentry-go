@@ -86,6 +86,12 @@ func extractReflectedStacktraceMethod(err error) reflect.Value {
 		return methodStackTrace
 	}
 
+	// https://github.com/samber/oops
+	methodStacktrace := errValue.MethodByName("Stacktrace")
+	if methodStacktrace.IsValid() {
+		return methodStacktrace
+	}
+
 	// https://github.com/pingcap/errors
 	methodGetStackTracer := errValue.MethodByName("GetStackTracer")
 	if methodGetStackTracer.IsValid() {
